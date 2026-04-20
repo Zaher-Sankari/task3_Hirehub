@@ -1,5 +1,4 @@
-# Create the README.md content for HireHub project
-readme_content = """# HireHub - Freelancing Platform API (MVP)
+# HireHub - Freelancing Platform API (MVP)
 
 HireHub is a specialized Arabic freelancing platform built with **Laravel 12** and **PHP 8.3**. It aims to connect professional Freelancers with Clients through a secure, scalable, and performance-optimized API.
 
