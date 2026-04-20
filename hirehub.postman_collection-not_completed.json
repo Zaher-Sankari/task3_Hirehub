@@ -1,0 +1,1216 @@
+{
+  "info": {
+    "_postman_id": "817a9a8c-e0a9-4f56-806f-9c8910c03609",
+    "name": "hirehub",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50337882",
+    "_collection_link": "https://go.postman.co/collection/50337882-817a9a8c-e0a9-4f56-806f-9c8910c03609?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"zee\",\n    \"last_name\": \"X\",\n    \"email\": \"zee@example.com\",\n    \"password\": \"12345678\",\n    \"password_confirmation\": \"12345678\",\n    \"type\": \"client\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success 201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"first_name\": \"zee\",\n    \"last_name\": \"V\",\n    \"email\": \"zee@example2.com\",\n    \"password\": \"12345678\",\n    \"password_confirmation\": \"12345678\",\n    \"type\": \"client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/register",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.4"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Apr 2026 01:12:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم إنشاء الحساب بنجاح\",\n    \"data\": {\n        \"user\": {\n            \"first_name\": \"zee\",\n            \"last_name\": \"V\",\n            \"email\": \"zee@example2.com\",\n            \"type\": \"client\",\n            \"city_id\": null,\n            \"updated_at\": \"2026-04-16T01:12:33.000000Z\",\n            \"created_at\": \"2026-04-16T01:12:33.000000Z\",\n            \"id\": 1,\n            \"full_name\": \"zee V\",\n            \"profile\": null\n        },\n        \"token\": \"1|9ETuPbrCwugfUPsQIGWiPxjbAO5X4nTPyvqfBP08459b7649\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"freelancer2@test.com\",\n    \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8002/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "wrong method 405",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\":\"zaher@example1.com\",\n    \"password\":\"Password@123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8001/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8001",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8001"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.4"
+                },
+                {
+                  "key": "Allow",
+                  "value": "POST"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Apr 2026 00:40:39 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"The GET method is not supported for route api/login. Supported methods: POST.\",\n    \"exception\": \"Symfony\\\\Component\\\\HttpKernel\\\\Exception\\\\MethodNotAllowedHttpException\",\n    \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php\",\n    \"line\": 130,\n    \"trace\": [\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php\",\n            \"line\": 115,\n            \"function\": \"requestMethodNotAllowed\",\n            \"class\": \"Illuminate\\\\Routing\\\\AbstractRouteCollection\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php\",\n            \"line\": 41,\n            \"function\": \"getRouteForMethods\",\n            \"class\": \"Illuminate\\\\Routing\\\\AbstractRouteCollection\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/RouteCollection.php\",\n            \"line\": 196,\n            \"function\": \"handleMatchedRoute\",\n            \"class\": \"Illuminate\\\\Routing\\\\AbstractRouteCollection\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/Router.php\",\n            \"line\": 777,\n            \"function\": \"match\",\n            \"class\": \"Illuminate\\\\Routing\\\\RouteCollection\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/Router.php\",\n            \"line\": 764,\n            \"function\": \"findRoute\",\n            \"class\": \"Illuminate\\\\Routing\\\\Router\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Routing/Router.php\",\n            \"line\": 753,\n            \"function\": \"dispatchToRoute\",\n            \"class\": \"Illuminate\\\\Routing\\\\Router\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php\",\n            \"line\": 200,\n            \"function\": \"dispatch\",\n            \"class\": \"Illuminate\\\\Routing\\\\Router\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 180,\n            \"function\": \"{closure:Illuminate\\\\Foundation\\\\Http\\\\Kernel::dispatchToRouter():197}\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Kernel\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php\",\n            \"line\": 21,\n            \"function\": \"{closure:Illuminate\\\\Pipeline\\\\Pipeline::prepareDestination():178}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php\",\n            \"line\": 31,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\TransformsRequest\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\ConvertEmptyStringsToNull\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php\",\n            \"line\": 21,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php\",\n            \"line\": 51,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\TransformsRequest\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\TrimStrings\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php\",\n            \"line\": 27,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Http\\\\Middleware\\\\ValidatePostSize\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php\",\n            \"line\": 109,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\PreventRequestsDuringMaintenance\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php\",\n            \"line\": 74,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Http\\\\Middleware\\\\HandleCors\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php\",\n            \"line\": 58,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Http\\\\Middleware\\\\TrustProxies\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php\",\n            \"line\": 22,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\InvokeDeferredCallbacks\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php\",\n            \"line\": 28,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 219,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Http\\\\Middleware\\\\ValidatePathEncoding\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php\",\n            \"line\": 137,\n            \"function\": \"{closure:{closure:Illuminate\\\\Pipeline\\\\Pipeline::carry():194}:195}\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php\",\n            \"line\": 175,\n            \"function\": \"then\",\n            \"class\": \"Illuminate\\\\Pipeline\\\\Pipeline\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php\",\n            \"line\": 144,\n            \"function\": \"sendRequestThroughRouter\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Kernel\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/Application.php\",\n            \"line\": 1220,\n            \"function\": \"handle\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Http\\\\Kernel\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/public/index.php\",\n            \"line\": 20,\n            \"function\": \"handleRequest\",\n            \"class\": \"Illuminate\\\\Foundation\\\\Application\",\n            \"type\": \"->\"\n        },\n        {\n            \"file\": \"/home/zee/codes/hireup/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php\",\n            \"line\": 23,\n            \"function\": \"require_once\"\n        }\n    ]\n}"
+            },
+            {
+              "name": "wrong info 401 unauthorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\":\"zaher@example1.com\",\n    \"password\":\"Password@123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8001/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8001",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8001"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.4"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Apr 2026 00:41:30 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"بيانات الدخول غير صحيحة\"\n}"
+            },
+            {
+              "name": "login freelancer success 200",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"freelancer1@test.com\",\n    \"password\": \"password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8002/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8002",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8002"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.5"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Apr 2026 12:05:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Logged in successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": 3,\n            \"first_name\": \"Mohammed\",\n            \"last_name\": \"Developer\",\n            \"email\": \"freelancer1@test.com\",\n            \"phone\": null,\n            \"type\": \"freelancer\",\n            \"is_verified\": true,\n            \"city_id\": 1,\n            \"created_at\": null,\n            \"updated_at\": null,\n            \"full_name\": \"Mohammed Developer\",\n            \"member_since\": \"Member since Just joined\",\n            \"freelancer_profile\": {\n                \"id\": 1,\n                \"user_id\": 3,\n                \"profile_picture\": null,\n                \"bio\": \"Expert Back-end Developer specialized in Laravel and APIs.\",\n                \"phone\": null,\n                \"hourly_rate\": \"25.00\",\n                \"availability\": \"available\",\n                \"portfolio_links\": null,\n                \"skills_summary\": null,\n                \"created_at\": \"2026-04-20T12:05:08.000000Z\",\n                \"updated_at\": \"2026-04-20T12:05:08.000000Z\"\n            }\n        },\n        \"token\": \"1|MAenMydW28ku2QsBnZmgrqaU6ZGxi3uAsPEXUKUM1fc3d5d9\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete account",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "3|kbLy9CaXi5yqsN4Pvd6DJpFRw96xNz2Qq6WlMswKdaeafe20",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/account",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "account"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "successfully deleted 200",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/account",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "account"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.4"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Apr 2026 01:20:26 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم حذف الحساب وجميع البيانات المتعلقة به بنجاح\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "4|SQH9myfD1HrOMTwryVKjJqZxZ7dMnEYrFFkTqstl804300bd",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"zee@example2.com\",\n    \"password\": \"12345678\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "get profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "2|LgYX9YBF7048xZuX41fXeHkqP9E6z54Yp4xPt9mEa7af203b",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"zee\",\n    \"last_name\": \"V\",\n    \"email\": \"zee@example2.com\",\n    \"password\": \"12345678\",\n    \"password_confirmation\": \"12345678\",\n    \"type\": \"client\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profile update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "4|wEVFRYtqpRVgiI0PXJjopw4SyhitKyEcSR4qDChNf5249db6",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\":\"freelancer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "projects",
+      "item": [
+        {
+          "name": "get open projects",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success 200 Ok",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8002/api/projects",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8002",
+                  "path": [
+                    "api",
+                    "projects"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8002"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.5"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Apr 2026 09:00:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Operation successful\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 2,\n                \"client_id\": 1,\n                \"title\": \"Flutter Mobile Application\",\n                \"description\": \"Looking for a freelancer to implement mobile app interfaces.\",\n                \"budget_type\": \"fixed\",\n                \"budget\": \"1500.00\",\n                \"deadline\": \"2026-05-20T00:00:00.000000Z\",\n                \"status\": \"open\",\n                \"created_at\": \"2026-04-20T09:00:08.000000Z\",\n                \"updated_at\": \"2026-04-20T09:00:08.000000Z\",\n                \"budget_format\": {\n                    \"get\": {},\n                    \"set\": null,\n                    \"withCaching\": false,\n                    \"withObjectCaching\": true\n                },\n                \"deadline_remaining\": {\n                    \"get\": {},\n                    \"set\": null,\n                    \"withCaching\": false,\n                    \"withObjectCaching\": true\n                },\n                \"client\": {\n                    \"id\": 1,\n                    \"first_name\": \"Samer\",\n                    \"last_name\": \"Client\",\n                    \"email\": \"client1@test.com\",\n                    \"phone\": null,\n                    \"type\": \"client\",\n                    \"is_verified\": true,\n                    \"city_id\": 1,\n                    \"created_at\": null,\n                    \"updated_at\": null,\n                    \"full_name\": \"Samer Client\",\n                    \"member_since\": {\n                        \"get\": {},\n                        \"set\": null,\n                        \"withCaching\": false,\n                        \"withObjectCaching\": true\n                    }\n                },\n                \"tags\": []\n            },\n            {\n                \"id\": 3,\n                \"client_id\": 1,\n                \"title\": \"Restaurant Booking System\",\n                \"description\": \"Developing a Backend and API for managing reservations and customers.\",\n                \"budget_type\": \"hourly\",\n                \"budget\": \"30.00\",\n                \"deadline\": \"2026-05-05T00:00:00.000000Z\",\n                \"status\": \"open\",\n                \"created_at\": \"2026-04-20T09:00:08.000000Z\",\n                \"updated_at\": \"2026-04-20T09:00:08.000000Z\",\n                \"budget_format\": {\n                    \"get\": {},\n                    \"set\": null,\n                    \"withCaching\": false,\n                    \"withObjectCaching\": true\n                },\n                \"deadline_remaining\": {\n                    \"get\": {},\n                    \"set\": null,\n                    \"withCaching\": false,\n                    \"withObjectCaching\": true\n                },\n                \"client\": {\n                    \"id\": 1,\n                    \"first_name\": \"Samer\",\n                    \"last_name\": \"Client\",\n                    \"email\": \"client1@test.com\",\n                    \"phone\": null,\n                    \"type\": \"client\",\n                    \"is_verified\": true,\n                    \"city_id\": 1,\n                    \"created_at\": null,\n                    \"updated_at\": null,\n                    \"full_name\": \"Samer Client\",\n                    \"member_since\": {\n                        \"get\": {},\n                        \"set\": null,\n                        \"withCaching\": false,\n                        \"withObjectCaching\": true\n                    }\n                },\n                \"tags\": []\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8002/api/projects?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8002/api/projects?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8002/api/projects?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8002/api/projects\",\n        \"per_page\": 15,\n        \"prev_page_url\": null,\n        \"to\": 2,\n        \"total\": 2\n    }\n}"
+            },
+            {
+              "name": "success 200 ok but no open projects",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8002/api/projects",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8002",
+                  "path": [
+                    "api",
+                    "projects"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8002"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.5"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Apr 2026 10:55:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Operation successful\",\n    \"data\": {\n        \"message\": \"No open projects available\",\n        \"projects\": []\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "close project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/projects/2/close",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "projects",
+                "2",
+                "close"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success 200 ok",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8002/api/projects/2/close",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8002",
+                  "path": [
+                    "api",
+                    "projects",
+                    "2",
+                    "close"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8002"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.5"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Apr 2026 10:29:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Project marked as closed\",\n    \"data\": {\n        \"id\": 2,\n        \"client_id\": 1,\n        \"title\": \"Flutter Mobile Application\",\n        \"description\": \"Looking for a freelancer to implement mobile app interfaces.\",\n        \"budget_type\": \"fixed\",\n        \"budget\": \"1500.00\",\n        \"deadline\": \"2026-05-20T00:00:00.000000Z\",\n        \"status\": \"closed\",\n        \"created_at\": \"2026-04-20T09:00:08.000000Z\",\n        \"updated_at\": \"2026-04-20T10:29:33.000000Z\",\n        \"budget_format\": {\n            \"get\": {},\n            \"set\": null,\n            \"withCaching\": false,\n            \"withObjectCaching\": true\n        },\n        \"deadline_remaining\": {\n            \"get\": {},\n            \"set\": null,\n            \"withCaching\": false,\n            \"withObjectCaching\": true\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "add new project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\" :1,\n    \"title\":\"test project\",\n    \"description\":\"Test descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest description\",\n    \"budget_type\":\"fixed\",\n    \"budget\":1000,\n    \"deadline\":\"2026-05-01\",\n    \"status\":\"open\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8002/api/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success 201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"client_id\" :1,\n    \"title\":\"test project\",\n    \"description\":\"Test descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest description\",\n    \"budget_type\":\"fixed\",\n    \"budget\":1000,\n    \"deadline\":\"2026-05-01\",\n    \"status\":\"open\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8002/api/projects",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8002",
+                  "path": [
+                    "api",
+                    "projects"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8002"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.5.5"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Apr 2026 10:40:42 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Project created successfully\",\n    \"data\": {\n        \"title\": \"test project\",\n        \"description\": \"Test descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest descriptionTest description\",\n        \"budget\": \"1000.00\",\n        \"deadline\": \"2026-05-01T00:00:00.000000Z\",\n        \"status\": \"open\",\n        \"client_id\": 1,\n        \"updated_at\": \"2026-04-20T10:40:42.000000Z\",\n        \"created_at\": \"2026-04-20T10:40:42.000000Z\",\n        \"id\": 4,\n        \"budget_format\": {\n            \"get\": {},\n            \"set\": null,\n            \"withCaching\": false,\n            \"withObjectCaching\": true\n        },\n        \"deadline_remaining\": {\n            \"get\": {},\n            \"set\": null,\n            \"withCaching\": false,\n            \"withObjectCaching\": true\n        },\n        \"tags\": []\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stats",
+      "item": [
+        {
+          "name": "get all stats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "metadata",
+      "item": [
+        {
+          "name": "get cities",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/cities",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "cities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get countries",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/countries",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "countries"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get tags",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/tags",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "tags"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get skills",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|fcXPqZhTCwbtq0qYnWRAwsd3YxI34UXOfxF4fLYa0d86e3fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/skills",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "skills"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "bids",
+      "item": [
+        {
+          "name": "add bid",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "2|Us3r4Me0zkJLqP2YCnFgFKuGjEA31hy0kwh2tYlm5ab93ab2",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"project_id\":1,\n    \"freelancer_id\":2,\n    \"amount\":1500,\n    \"proposal\":\"test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test \",\n    \"delivery_days\":20\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8002/api/bids",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8002",
+              "path": [
+                "api",
+                "bids"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
