@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('phone')->nullable();
 // better not to set the default value for user type, then the user can choose during signup
             $table->enum('type', ['client', 'freelancer']);
-            $table->boolean('is_verified')->default(false);
             $table->unsignedBigInteger('city_id')->nullable();
             $table->timestamps();
         });

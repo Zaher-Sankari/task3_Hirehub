@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profile_freelancer', function (Blueprint $table) {
+        Schema::create('freelancer_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
             $table->string('profile_picture')->nullable();
             $table->text('bio')->nullable();
             $table->string('phone')->nullable();
             $table->decimal('hourly_rate', 10, 2)->nullable();
-            $table->enum('availability', ['available', 'busy', 'not available']);
+            $table->enum('availability', ['available', 'busy', 'not_available']);
             $table->json('portfolio_links')->nullable();
-            $table->json('skills_summary')->nullable();
+            //$table->json('skills_summary')->nullable();
+            $table->boolean('verified')->default(false);
             $table->timestamps();
         });
     }
