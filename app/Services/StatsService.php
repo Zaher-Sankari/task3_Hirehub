@@ -3,10 +3,9 @@
 namespace App\Services;
 
 use App\Models\Bid;
-use App\Models\Project;
+use App\Models\Freelancer;
 use App\Models\Review;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class StatsService
 {
@@ -14,10 +13,8 @@ class StatsService
     {
         return [
             'users' => $this->getUserStats(),
-            'projects' => $this->getProjectStats(),
             'reviews' => $this->getReviewStats(),
             'finance' => $this->getFinancialStats(),
-            'activity' => $this->getActivityStats(),
         ];
     }
 
@@ -26,23 +23,17 @@ class StatsService
         return [
             'total_clients' => User::where('type', 'client')->count(),
             'total_freelancers' => User::where('type', 'freelancer')->count(),
-            'verified_freelancers' => User::where('type', 'freelancer')->where('is_verified', true)->count(),
+            'verified_freelancers' => Freelancer::where('verified', true)->count(),
+            'unverified_freelancers' =>Freelancer::where('verified', false)->count(),
+            'new_users_this_month' => User::whereMonth('created_at', now()->month)->count(),
         ];
     }
-
-    private function getProjectStats()
-    {
-        return Project::select('status', DB::raw('count(*) as total'))
-            ->groupBy('status')
-            ->get()
-            ->pluck('total', 'status');
-    }
-
     private function getReviewStats(): array
     {
         return [
-            'average' => round(Review::avg('rating') ?? 0, 1),
+            'average_rating' => round(Review::avg('rating') ?? 0, 1),
             'total_reviews' => Review::count(),
+            'reviews_this_week' => Review::where('created_at', '>=', now()->subDays(7))->count(),
         ];
     }
 
@@ -51,18 +42,7 @@ class StatsService
         return [
             'total_transactions_value' => Bid::where('status', 'accepted')->sum('amount'),
             'average_bid_amount' => round(Bid::avg('amount') ?? 0, 2),
-        ];
-    }
-
-    private function getActivityStats(): array
-    {
-        $totalBids = Bid::count();
-        $acceptedBids = Bid::where('status', 'accepted')->count();
-        $conversionRate = $totalBids > 0 ? ($acceptedBids / $totalBids) * 100 : 0;
-
-        return [
-            'new_projects_this_week' => Project::where('created_at', '>=', now()->subDays(7))->count(),
-            'bids_conversion_rate' => round($conversionRate, 2).'%',
+            'total_bids_value' => round(Bid::sum('amount'), 2),
         ];
     }
 }
