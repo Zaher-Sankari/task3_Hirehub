@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\RequestLog;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class logRequest
@@ -19,16 +19,16 @@ class logRequest
         $startTime = microtime(true);
         $response = $next($request);
         $duration = microtime(true) - $startTime;
-
-        Log::info('API Request Logged', [
-            'method'   => $request->method(),
-            'url'      => $request->fullUrl(),
-            'user_id'  => $request->user()?->id ?? 'guest',
-            'status'   => $response->getStatusCode(),
-            'duration' => round($duration, 4) . 's',
+    
+        RequestLog::create([
+            'user_id' => $request->user()?->id,
+            'method' => $request->method(),
+            'endpoint' => $request->path(),
+            'ip' => $request->ip(),
+            'response_time_ms' => round($duration * 1000, 2),
+            'status_code' => $response->getStatusCode(),
         ]);
-
-        // 5. Return the response
+    
         return $response;
     }
 }

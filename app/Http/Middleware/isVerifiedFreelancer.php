@@ -17,10 +17,10 @@ class isVerifiedFreelancer
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if ($user && $user->type === 'freelancer' && !$user->is_verified) {
+        if ($user && $user->type === 'freelancer' && !$user->freelancerProfile?->verified) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Your account must be verified to submit bids.'
+                'message' => 'Your account must be verified to perform this action.'
             ], 403);
         }
         return $next($request);

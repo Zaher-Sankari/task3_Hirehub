@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             logRequest::class
         ]);
         $middleware->alias([
+            'freelancerProfile.verified' => isVerifiedFreelancer::class,
             'verified_freelancer' => isVerifiedFreelancer::class,
             'logger'     => logRequest::class
         ]);
