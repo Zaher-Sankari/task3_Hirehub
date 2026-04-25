@@ -6,20 +6,25 @@ namespace App\Models;
 use App\Enums\AvailabilityStatus;
 use App\Models\City;
 use App\Models\Freelancer;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['first_name', 'last_name', 'email', 'password', 'phone', 'type', 'is_verified', 'city_id', 'user_id', 'bio'])]
-#[Hidden(['password'])]
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
-
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'phone',
+        'type',
+        'country',
+        'city_id'
+    ];
+    protected $hidden = ['password'];
     /**
      * Get the attributes that should be cast.
      *
@@ -28,9 +33,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'is_verified' => 'boolean',
+            'verified' => 'boolean',
             'city_id' => 'integer',
-            'password'=>'hashed'
+            'password' => 'hashed'
         ];
     }
     protected $appends = [
@@ -72,14 +77,6 @@ class User extends Authenticatable
         return $this->morphMany(Review::class, 'reviewable');
     }
 
-
-    // Mutator:
-    // public function setPasswordAttribute($value)
-    // {
-    //     $this->attributes['password'] = bcrypt($value);
-    // }
-
-
     // Accessors:
     public function getFullNameAttribute()
     {
@@ -87,7 +84,8 @@ class User extends Authenticatable
     }
     public function getMemberSinceAttribute()
     {
-        return "Member since " . ($this->created_at?->format('F Y') ?? 'Just joined');    }
+        return "Member since " . ($this->created_at?->format('F Y'));
+    }
 
     public function setPhoneAttribute($value): void
     {
@@ -95,10 +93,7 @@ class User extends Authenticatable
     }
 
     //scopes:
-    public function isVerifiedScope()
-    {
-        return $this->where('is_verified', true);
-    }
+
     public function isActiveScope()
     {
         return $this->where('is_active', true);
@@ -113,12 +108,12 @@ class User extends Authenticatable
     }
 
     public function isFreelancer(): bool
-{
-    return $this->type === 'freelancer';
-}
+    {
+        return $this->type === 'freelancer';
+    }
 
-public function isClient(): bool
-{
-    return $this->type === 'client';
-}
+    public function isClient(): bool
+    {
+        return $this->type === 'client';
+    }
 }

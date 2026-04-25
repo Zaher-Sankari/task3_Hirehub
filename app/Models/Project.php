@@ -56,14 +56,12 @@ class Project extends Model
         return $this->morphMany(Review::class, 'reviewable');
     }
 
-    protected function getBudgetFormatAttribute()
+    protected function budgetFormat(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                return $this->budget_type === 'fixed'
-                    ? "{$this->budget} USD"
-                    : "{$this->budget}$/hr";
-            }
+            get: fn() => $this->budget_type === 'fixed'
+                ? "{$this->budget} USD"
+                : "{$this->budget}$/hr"
         );
     }
 
@@ -80,7 +78,7 @@ class Project extends Model
             }
         );
     }
-//scopes
+    //scopes
     public function scopeOpen($query)
     {
         return $query->where('status', 'open');

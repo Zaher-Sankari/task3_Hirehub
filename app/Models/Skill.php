@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +9,7 @@ class Skill extends Model
 {
     use HasFactory;
     
-    #[Fillable(['name'])]
+    protected $fillable = ['name'];
     public $timestamps = false;
 
     public function users()
