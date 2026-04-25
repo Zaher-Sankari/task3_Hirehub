@@ -23,8 +23,22 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'=> 'required|email',
-            'password'=> 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'The email address is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'password.required' => 'The password is required.',
         ];
     }
 }

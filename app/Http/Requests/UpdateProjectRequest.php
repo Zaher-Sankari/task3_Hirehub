@@ -15,7 +15,7 @@ class UpdateProjectRequest extends FormRequest
     {
         $project = $this->route('project');
         $user = $this->user();
-        
+
         return $user && $user->type === 'client' && $user->id === $project->client_id;
     }
 
@@ -24,16 +24,16 @@ class UpdateProjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => ['sometimes', 'string', 'min:10', 'max:255', new OffensiveWords()],
             'description' => ['sometimes', 'string', 'min:50', new OffensiveWords()],
             'budget_type' => ['sometimes', Rule::in(['fixed', 'hourly'])],
-            'budget' => ['sometimes', 'numeric', 'min:1'],
             'deadline' => ['sometimes', 'date', 'after:today'],
             'tags' => ['nullable', 'array', 'max:5'],
             'tags.*' => ['exists:tags,id'],
-            'status' => ['sometimes', Rule::in(['open', 'in_progress', 'closed'])],
+            'status' => ['sometimes', Rule::in(['open', 'closed'])]
         ];
+        return $rules;
     }
 
     /**
@@ -43,11 +43,15 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'title.min' => 'Title must be at least 10 characters.',
+            'title.max' => 'Title cannot exceed 255 characters.',
             'description.min' => 'Description must be at least 50 characters.',
-            'budget.min' => 'Budget must be at least 1.',
+            'budget.min' => 'Budget must be at least :min.',
+            'budget.max' => 'Hourly rate cannot exceed $500 per hour.',
+            'budget_type.in' => 'Budget type must be fixed or hourly.',
             'deadline.after' => 'Deadline must be in the future.',
             'tags.max' => 'You can add up to 5 tags only.',
-            'status.in' => 'Invalid status value.',
+            'tags.*.exists' => 'One or more selected tags are invalid.',
+            'status.in' => 'Status must be open or closed.',
         ];
     }
 
@@ -59,7 +63,7 @@ class UpdateProjectRequest extends FormRequest
         if ($this->has('title')) {
             $this->merge(['title' => trim($this->title)]);
         }
-        
+
         if ($this->has('description')) {
             $this->merge(['description' => trim($this->description)]);
         }

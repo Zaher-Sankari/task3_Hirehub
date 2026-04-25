@@ -33,4 +33,25 @@ class RegisterRequest extends FormRequest
             'city_id'=> ['nullable', 'exists:cities,id'],
         ];
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'first_name.required' => 'First name is required.',
+            'last_name.required' => 'Last name is required.',
+            'email.required' => 'Email is required.',
+            'email.email' => 'Invalid email format.',
+            'email.unique' => 'This email is already taken.',
+            'password.required' => 'Password is required.',
+            'password.confirmed' => 'Password confirmation does not match.',
+            'type.required' => 'User type is required.',
+            'type.in' => 'User type must be either client or freelancer.',
+            'city_id.exists' => 'Selected city is invalid.',
+        ];
+    }
 }

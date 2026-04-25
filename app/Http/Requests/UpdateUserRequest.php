@@ -28,4 +28,19 @@ class UpdateUserRequest extends FormRequest
             'city_id'=> 'sometimes|required|exists:cities,id',
         ];
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'first_name.required' => 'First name is required.',
+            'last_name.required' => 'Last name is required.',
+            'city_id.required' => 'City is required.',
+            'city_id.exists' => 'Selected city is invalid.',
+        ];
+    }
 }

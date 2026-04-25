@@ -22,15 +22,22 @@ class StoreProjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => ['required', 'string', 'min:10', 'max:255', new OffensiveWords()],
-            'description' => ['required', 'string', 'min:50', new OffensiveWords()],
+            'description' => ['required', 'string', 'min:25', new OffensiveWords()],
             'budget_type' => ['required', Rule::in(['fixed', 'hourly'])],
-            'budget' => ['required', 'numeric', 'min:1'],  
-            'deadline' => ['required', 'date', 'after:today'], 
+            'deadline' => ['required', 'date', 'after:today'],
             'tags' => ['nullable', 'array', 'max:5'],
             'tags.*' => ['exists:tags,id'],
         ];
+
+        if ($this->budget_type === 'fixed') {
+            $rules['budget'] = ['required', 'numeric', 'min:10'];
+        } else {
+            $rules['budget'] = ['required', 'numeric', 'min:5', 'max:200'];
+        }
+
+        return $rules;
     }
 
     /**
@@ -41,15 +48,18 @@ class StoreProjectRequest extends FormRequest
         return [
             'title.required' => 'Project title is required.',
             'title.min' => 'Title must be at least 10 characters.',
+            'title.max' => 'Title cannot exceed 255 characters.',
             'description.required' => 'Project description is required.',
-            'description.min' => 'Description must be at least 50 characters.',
-            'budget_type.required' => 'Budget type is required.',
-            'budget_type.in' => 'Budget type must be fixed or hourly.',
+            'description.min' => 'Description must be at least 25 characters.',
+            'budget_type.required' => 'Please specify budget type (fixed or hourly).',
+            'budget_type.in' => 'Budget type must be either fixed or hourly.',
             'budget.required' => 'Budget amount is required.',
-            'budget.min' => 'Budget must be at least 1.',
-            'deadline.required' => 'Deadline is required.',
+            'budget.min' => 'Budget must be at least :min.',
+            'budget.max' => 'Hourly rate cannot exceed $200 per hour.',
+            'deadline.required' => 'Project deadline is required.',
             'deadline.after' => 'Deadline must be in the future.',
             'tags.max' => 'You can add up to 5 tags only.',
+            'tags.*.exists' => 'One or more selected tags are invalid.',
         ];
     }
 
