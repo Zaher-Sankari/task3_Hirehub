@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\Freelancer;
@@ -13,19 +14,19 @@ class AuthService
     {
         return DB::transaction(function () use ($data) {
             $user = User::create([
-                'first_name'=> $data['first_name'],
-                'last_name'=> $data['last_name'],
-                'email'=> strtolower($data['email']),
-                'password'=> $data['password'],
-                'type'=> $data['type'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => strtolower($data['email']),
+                'password' => $data['password'],
+                'type' => $data['type'],
                 'city_id' => $data['city_id'] ?? null,
-                'is_verified' => $data['type'] === 'client' ? true : false,
             ]);
 
             if ($user->isFreelancer()) {
                 Freelancer::create([
-                    'user_id'      => $user->id,
+                    'user_id' => $user->id,
                     'availability' => 'available',
+                    'verified' => false,
                 ]);
             }
 
@@ -36,7 +37,7 @@ class AuthService
                 : $user;
 
             return [
-                'user'  => $userData,
+                'user' => $userData,
                 'token' => $token,
             ];
         });
@@ -51,15 +52,16 @@ class AuthService
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
+
         $userData = $user->isFreelancer() 
             ? $user->load('freelancerProfile') 
             : $user;
-
+// Revoke all previous tokens so the user will only have 1 token at a time.
         $user->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return [
-            'user'  => $userData,
+            'user' => $userData,
             'token' => $token,
         ];
     }
