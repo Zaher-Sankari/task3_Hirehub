@@ -1,62 +1,46 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Models\Project;
 use App\Models\User;
-use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
 {
     public function run(): void
     {
-        $client = User::where('type', 'client')->first();
+        $clients = User::where('type', 'client')->get();
         
-        $webTag = Tag::where('name', 'Web Development')->first();
-        $larTag = Tag::where('name', 'Laravel')->first();
-        $mobTag = Tag::where('name', 'Mobile Apps')->first();
-
-        $p1 = Project::create([
-            'client_id'   => $client->id,
-            'title'       => 'Admin Dashboard Development',
-            'description' => 'A completed project used to test the review system and attachments.',
-            'budget_type' => 'fixed',
-            'budget'      => 800.00,
-            'deadline'    => now()->subDays(10),
-            'status'      => 'closed',
-        ]);
+        $projects = [
+            ['title' => 'E-commerce Website with Laravel', 'description' => 'Need a full-featured e-commerce website with payment gateway integration.', 'budget_type' => 'fixed', 'budget' => 2500, 'status' => 'open'],
+            ['title' => 'Mobile App UI/UX Design', 'description' => 'Design a modern mobile app for food delivery.', 'budget_type' => 'fixed', 'budget' => 800, 'status' => 'open'],
+            ['title' => 'Laravel Backend API Development', 'description' => 'Build RESTful API for a real estate platform.', 'budget_type' => 'hourly', 'budget' => 45, 'status' => 'open'],
+            ['title' => 'WordPress Website for Restaurant', 'description' => 'Create a WordPress website with online ordering.', 'budget_type' => 'fixed', 'budget' => 600, 'status' => 'in_progress'],
+            ['title' => 'React Native Mobile App', 'description' => 'Develop a fitness tracking mobile app.', 'budget_type' => 'hourly', 'budget' => 50, 'status' => 'open'],
+            ['title' => 'SEO Optimization for E-commerce', 'description' => 'Improve SEO for an existing e-commerce website.', 'budget_type' => 'fixed', 'budget' => 1200, 'status' => 'open'],
+            ['title' => 'Social Media Management', 'description' => 'Manage social media accounts for a fashion brand.', 'budget_type' => 'hourly', 'budget' => 25, 'status' => 'closed'],
+            ['title' => 'Python Web Scraping Script', 'description' => 'Build a web scraping script to extract product data.', 'budget_type' => 'fixed', 'budget' => 400, 'status' => 'open'],
+            ['title' => 'Corporate Logo Design', 'description' => 'Design a professional logo for a tech startup.', 'budget_type' => 'fixed', 'budget' => 250, 'status' => 'open'],
+            ['title' => 'DevOps Setup - AWS Deployment', 'description' => 'Set up CI/CD pipeline on AWS.', 'budget_type' => 'hourly', 'budget' => 65, 'status' => 'open'],
+            ['title' => 'Content Writing for Blog', 'description' => 'Write 20 SEO-optimized blog posts.', 'budget_type' => 'fixed', 'budget' => 600, 'status' => 'open'],
+            ['title' => 'Data Entry for CRM', 'description' => 'Enter 5000 customer records into CRM system.', 'budget_type' => 'fixed', 'budget' => 300, 'status' => 'closed'],
+        ];
         
-        if ($webTag && $larTag) {
-            $p1->tags()->attach([$webTag->id, $larTag->id]);
-        }
-
-        $p2 = Project::create([
-            'client_id'   => $client->id,
-            'title'       => 'Flutter Mobile Application',
-            'description' => 'Looking for a freelancer to implement mobile app interfaces.',
-            'budget_type' => 'fixed',
-            'budget'      => 1500.00,
-            'deadline'    => now()->addMonths(1),
-            'status'      => 'open',
-        ]);
-
-        if ($mobTag) {
-            $p2->tags()->attach([$mobTag->id]);
-        }
-
-        // 3. Open Project (Restaurant Booking System)
-        $p3 = Project::create([
-            'client_id'   => $client->id,
-            'title'       => 'Restaurant Booking System',
-            'description' => 'Developing a Backend and API for managing reservations and customers.',
-            'budget_type' => 'hourly',
-            'budget'      => 30.00,
-            'deadline'    => now()->addDays(15),
-            'status'      => 'open',
-        ]);
-
-        if ($webTag && $larTag) {
-            $p3->tags()->attach([$webTag->id, $larTag->id]);
+        $deadlines = [now()->addDays(15), now()->addDays(30), now()->addDays(45), now()->addDays(60)];
+        
+        foreach ($projects as $index => $data) {
+            $client = $clients[$index % count($clients)];
+            
+            Project::create([
+                'client_id' => $client->id,
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'budget_type' => $data['budget_type'],
+                'budget' => $data['budget'],
+                'deadline' => $deadlines[array_rand($deadlines)],
+                'status' => $data['status'],
+            ]);
         }
     }
 }

@@ -1,8 +1,9 @@
 <?php
+
 namespace Database\Seeders;
 
+use App\Models\Bid;
 use App\Models\Review;
-use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -10,27 +11,42 @@ class ReviewSeeder extends Seeder
 {
     public function run(): void
     {
-        $closedProject = Project::where('status', 'closed')->first();
-        $client        = User::where('type', 'client')->first();
-        $freelancer    = User::where('type', 'freelancer')->first();
-
-        Review::insert([
-            [
-                'client_id'       => $client->id,
-                'project_id'      => $closedProject->id,
-                'rating'          => 5,
-                'comment'         => 'Professional developer, highly recommended.',
-                'reviewable_type' => User::class,
-                'reviewable_id'   => $freelancer->id,
-            ],
-            [
-                'client_id'       => $client->id,
-                'project_id'      => $closedProject->id,
-                'rating'          => 4,
-                'comment'         => 'Clean code and excellent speed. The project runs efficiently.',
-                'reviewable_type' => Project::class,
-                'reviewable_id'   => $closedProject->id,
-            ],
-        ]);
+        $acceptedBids = Bid::where('status', 'accepted')->get();
+        
+        $comments = [
+            'Excellent work! Delivered on time.',
+            'Great communication and professional approach.',
+            'Good quality work, would recommend.',
+            'Amazing freelancer! Very skilled.',
+            'Satisfied with the work.',
+            'Outstanding! One of the best.',
+        ];
+        
+        foreach ($acceptedBids as $bid) {
+            $client = User::find($bid->project->client_id);
+            $freelancer = User::find($bid->freelancer_id);
+            
+            if ($client && $freelancer) {
+                // Review for freelancer
+                Review::create([
+                    'reviewer_id' => $client->id,
+                    'project_id' => $bid->project_id,
+                    'reviewable_type' => 'App\\Models\\Freelancer',
+                    'reviewable_id' => $freelancer->id,
+                    'rating' => rand(4, 5),
+                    'comment' => $comments[array_rand($comments)],
+                ]);
+                
+                // Review for project
+                Review::create([
+                    'reviewer_id' => $freelancer->id,
+                    'project_id' => $bid->project_id,
+                    'reviewable_type' => 'App\\Models\\Project',
+                    'reviewable_id' => $bid->project_id,
+                    'rating' => rand(3, 5),
+                    'comment' => 'Clear requirements and good client communication.',
+                ]);
+            }
+        }
     }
 }

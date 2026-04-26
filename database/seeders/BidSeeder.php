@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Models\Bid;
@@ -10,33 +11,44 @@ class BidSeeder extends Seeder
 {
     public function run(): void
     {
-        // Find an open project to bid on
-        $openProject = Project::where('status', 'open')->first();
+        $freelancers = User::where('type', 'freelancer')->get();
+        $projects = Project::all();
         
-        // Get two different freelancers
-        $freelancer1 = User::where('type', 'freelancer')->first();
-        $freelancer2 = User::where('type', 'freelancer')->skip(1)->first(); 
-
-        // Clear existing bids for this project to avoid conflicts during re-seeding
-        Bid::where('project_id', $openProject->id)->delete();
-
-        Bid::insert([
-            [
-                'project_id'      => $openProject->id,
-                'freelancer_id'   => $freelancer1->id,
-                'amount'          => 1400.00,
-                'proposal' => 'I have 3 years of experience in Flutter and will meet the deadline.',
-                'delivery_days'   => 15,
-                'status'          => 'accepted',
-            ],
-            [
-                'project_id'      => $openProject->id,
-                'freelancer_id'   => $freelancer2->id,
-                'amount'          => 1600.00,
-                'proposal' => 'I will provide professional interfaces with continuous support.',
-                'delivery_days'   => 20,
-                'status'          => 'pending',
-            ],
-        ]);
+        foreach ($projects as $project) {
+            $numBids = rand(0, 5);
+            $shuffledFreelancers = $freelancers->shuffle();
+            
+            for ($i = 0; $i < $numBids && $i < $shuffledFreelancers->count(); $i++) {
+                $freelancer = $shuffledFreelancers[$i];
+                
+                $exists = Bid::where('project_id', $project->id)
+                    ->where('freelancer_id', $freelancer->id)
+                    ->exists();
+                
+                if (!$exists) {
+                    $amount = $project->budget_type === 'fixed'
+                        ? $project->budget - rand(100, min($project->budget - 50, 500))
+                        : $project->budget + rand(-10, 20);
+                    
+                    $amount = max($amount, $project->budget_type === 'fixed' ? 10 : 5);
+                    
+                    $status = 'pending';
+                    if ($project->status === 'closed') {
+                        $status = 'rejected';
+                    } elseif ($project->status === 'in_progress' && $i === 0) {
+                        $status = 'accepted';
+                    }
+                    
+                    Bid::create([
+                        'project_id' => $project->id,
+                        'freelancer_id' => $freelancer->id,
+                        'amount' => round($amount, 2),
+                        'delivery_days' => rand(5, 45),
+                        'proposal' => "I'm interested in this project. I have experience with similar projects.",
+                        'status' => $status,
+                    ]);
+                }
+            }
+        }
     }
 }
