@@ -24,4 +24,9 @@ class OffensiveWords implements ValidationRule
             }
         }
     }
+    public function addWords(array $words): self
+    {
+        $this->bannedWords = array_merge($this->bannedWords, $words);
+        return $this;
+    }
 }
