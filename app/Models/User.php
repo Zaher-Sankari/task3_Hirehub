@@ -33,7 +33,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'verified' => 'boolean',
             'city_id' => 'integer',
             'password' => 'hashed'
         ];
