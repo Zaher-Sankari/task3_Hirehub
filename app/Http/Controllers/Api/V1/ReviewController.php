@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
@@ -12,17 +11,21 @@ class ReviewController extends Controller
 {
     use ApiResponse;
 
-    protected $reviewService;
+    protected ReviewService $reviewService;
 
     public function __construct(ReviewService $reviewService)
     {
         $this->reviewService = $reviewService;
     }
 
-    public function store(StoreReviewRequest $request)
+    /**
+     * Store a new review
+     * Authorization & Validation handled by StoreReviewRequest
+     */
+    public function store(StoreReviewRequest $request): JsonResponse
     {
         $review = $this->reviewService->storeReview(
-            $request->user(), 
+            $request->user(),
             $request->validated()
         );
 

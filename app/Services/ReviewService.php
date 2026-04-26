@@ -1,26 +1,36 @@
 <?php
-
 namespace App\Services;
 
+use App\Models\Freelancer;
+use App\Models\Project;
 use App\Models\Review;
 use App\Models\User;
-use App\Models\Project;
+use Illuminate\Support\Facades\DB;
 
 class ReviewService
 {
-    public function storeReview(User $fromUser, array $data)
+    /**
+     * Store a new review
+     * Note: Authorization and Validation are handled by StoreReviewRequest
+     */
+    public function storeReview(User $reviewer, array $data): Review
     {
-        $modelClass = $data['reviewable_type'] === 'project' 
-                      ? Project::class 
-                      : User::class;
+        return DB::transaction(function () use ($reviewer, $data) {
+            // Determine model class
+            $modelClass = $data['reviewable_type'] === 'project' 
+                ? Project::class 
+                : Freelancer::class;
 
-        return Review::create([
-            'client_id' => $fromUser->id,
-            'project_id' => $data['project_id'],
-            'reviewable_type'=> $modelClass,
-            'reviewable_id'=> $data['reviewable_id'],
-            'rating'=> $data['rating'],
-            'comment'=> $data['comment'],
-        ]);
+            $review = Review::create([
+                'reviewer_id' => $reviewer->id,
+                'project_id' => $data['project_id'],
+                'reviewable_type' => $modelClass,
+                'reviewable_id' => $data['reviewable_id'],
+                'rating' => $data['rating'],
+                'comment' => $data['comment'],
+            ]);
+
+            return $review->load('reviewer');
+        });
     }
 }
