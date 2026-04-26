@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\StatsService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 
 class StatsController extends Controller
 {
@@ -31,7 +30,6 @@ class StatsController extends Controller
             $data = $this->statsService->getDashboardStats();
             return $this->success($data, 'Dashboard stats retrieved successfully');
         } catch (\Exception $e) {
-            Log::error('Stats retrieval failed', ['error' => $e->getMessage()]);
             return $this->error('Failed to retrieve statistics', 500);
         }
     }
