@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+
 class ProjectService
 {
     /**
@@ -13,43 +14,50 @@ class ProjectService
      */
     public function listProjects(array $filters)
     {
-    
-        $cacheKey = 'project_list_' . md5(json_encode($filters));
-        return Cache::remember($cacheKey,180,function () use ($filters){
-             $query = Project::query()
-            ->with(['client', 'tags', 'bids'])
-            ->where('status', 'open'); 
+        $cacheKey = 'project_ids_' . md5(json_encode($filters));
 
-        if (!empty($filters['search'])) {
-            $search = $filters['search'];
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('description', 'LIKE', "%{$search}%");
-            });
-        }
+        // Cache only the IDs
+        $projectIds = Cache::remember($cacheKey, 180, function () use ($filters) {
+            $query = Project::query()
+                ->with(['client', 'tags', 'bids'])
+                ->where('status', 'open');
 
-        if (!empty($filters['min_budget'])) {
-            $query->where('budget', '>=', $filters['min_budget']);
-        }
-        
-        if (!empty($filters['max_budget'])) {
-            $query->where('budget', '<=', $filters['max_budget']);
-        }
+            if (!empty($filters['search'])) {
+                $search = $filters['search'];
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('description', 'LIKE', "%{$search}%");
+                });
+            }
 
-        if (!empty($filters['budget_type'])) {
-            $query->where('budget_type', $filters['budget_type']);
-        }
+            if (!empty($filters['min_budget'])) {
+                $query->where('budget', '>=', $filters['min_budget']);
+            }
 
-        if (!empty($filters['tag_ids'])) {
-            $tagIds = is_array($filters['tag_ids']) ? $filters['tag_ids'] : explode(',', $filters['tag_ids']);
-            $query->whereHas('tags', function ($q) use ($tagIds) {
-                $q->whereIn('tags.id', $tagIds);
-            });  
-        }
-        return $query->paginate(15);
+            if (!empty($filters['max_budget'])) {
+                $query->where('budget', '<=', $filters['max_budget']);
+            }
+
+            if (!empty($filters['budget_type'])) {
+                $query->where('budget_type', $filters['budget_type']);
+            }
+
+            if (!empty($filters['tag_ids'])) {
+                $tagIds = is_array($filters['tag_ids']) ? $filters['tag_ids'] : explode(',', $filters['tag_ids']);
+                $query->whereHas('tags', function ($q) use ($tagIds) {
+                    $q->whereIn('tags.id', $tagIds);
+                });
+            }
+
+            return $query->pluck('id')->toArray();
         });
-    }
 
+        $projects = Project::whereIn('id', $projectIds)
+            ->with(['client', 'tags', 'bids'])
+            ->paginate(15);
+
+        return $projects;
+    }
     /**
      * Create a new project
      */
@@ -72,7 +80,7 @@ class ProjectService
             return $project->load(['client', 'tags']);
         });
     }
-    
+
     /**
      * Find a specific project with all relations
      */
@@ -102,7 +110,7 @@ class ProjectService
             if ($project->status !== 'open') {
                 throw new \Exception('Cannot update a closed or in-progress project');
             }
-            
+
             $project->update($data);
 
             if (isset($data['tags'])) {
@@ -120,11 +128,11 @@ class ProjectService
     {
         // Check if project has any accepted bids
         $hasAcceptedBid = $project->bids()->where('status', 'accepted')->exists();
-        
+
         if ($hasAcceptedBid) {
             throw new \Exception('Cannot delete a project with an accepted bid');
         }
-        
+
         return DB::transaction(function () use ($project) {
             $project->tags()->detach();
             $project->bids()->delete();
@@ -134,7 +142,7 @@ class ProjectService
             return $project->delete();
         });
     }
-    
+
     /**
      * Close a project
      */
@@ -143,7 +151,7 @@ class ProjectService
         if ($project->status === 'closed') {
             throw new \Exception('Project is already closed');
         }
-        
+
         $project->update(['status' => 'closed']);
 
         Cache::flush();
