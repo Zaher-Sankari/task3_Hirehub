@@ -105,3 +105,8 @@ This project adheres to **SOLID** principles to ensure maintainability:
    ```bash
    php artisan ser
    ```
+
+## Login Credentials:
+| Username | Password |
+| :--- | :--- |
+| admin@hirehub.com | password123 |
