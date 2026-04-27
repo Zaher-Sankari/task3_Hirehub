@@ -110,3 +110,6 @@ This project adheres to **SOLID** principles to ensure maintainability:
 | Username | Password |
 | :--- | :--- |
 | admin@hirehub.com | password123 |
+
+## Postman Collection:
+[Click to see the Hirehub Collection](https://documenter.getpostman.com/view/50337882/2sBXqFLgs9)
