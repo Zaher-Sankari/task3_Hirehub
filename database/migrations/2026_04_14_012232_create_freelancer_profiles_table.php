@@ -20,7 +20,8 @@ return new class extends Migration
             $table->decimal('hourly_rate', 10, 2)->nullable();
             $table->enum('availability', ['available', 'busy', 'not_available']);
             $table->json('portfolio_links')->nullable();
-            //$table->json('skills_summary')->nullable();
+            $table->decimal('avg_rating',2,1)->default(0);
+            $table->timestamp('rating_updated_at')->nullable();
             $table->boolean('verified')->default(false);
             $table->timestamps();
         });
