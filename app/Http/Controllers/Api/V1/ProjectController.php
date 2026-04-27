@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Requests\StoreProjectRequest;
+use App\Jobs\AddProjectNotification;
 use App\Models\Project;
 use App\Services\ProjectService;
 use App\Traits\ApiResponse;
@@ -25,9 +26,10 @@ class ProjectController extends Controller
     /**
      * List projects with filters (15 per page)
      */
-    public function index(array $filter): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $projects = $this->projectService->listProjects($filter);
+        $filters = $request->query();
+        $projects = $this->projectService->listProjects($filters);
         return $this->success($projects);
     }
 
@@ -40,7 +42,7 @@ class ProjectController extends Controller
             $request->user(), 
             $request->validated()
         );
-
+        AddProjectNotification::dispatch($project);
         return $this->success($project, 'Project created successfully', 201);
     }
 

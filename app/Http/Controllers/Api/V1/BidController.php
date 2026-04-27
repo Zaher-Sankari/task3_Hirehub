@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBidRequest;
+use App\Jobs\AcceptBidNNotification;
+use App\Jobs\RejectBidNNotification;
 use App\Models\Bid;
 use App\Services\BidService;
 use App\Traits\ApiResponse;
@@ -42,6 +44,8 @@ class BidController extends Controller
     public function accept(Bid $bid): JsonResponse
     {
         $acceptedBid = $this->bidService->acceptBid($bid);
+
+        AcceptBidNNotification::dispatch($acceptedBid);
         
         return $this->success($acceptedBid, 'Bid accepted successfully');
     }
@@ -49,6 +53,8 @@ class BidController extends Controller
     public function reject(Bid $bid): JsonResponse
     {
         $rejectedBid = $this->bidService->rejectBid($bid);
+
+        RejectBidNNotification::dispatch($rejectedBid);
         
         return $this->success($rejectedBid, 'Bid rejected successfully');
     }
