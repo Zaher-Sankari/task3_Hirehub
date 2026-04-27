@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class FreelancerService
 {
@@ -13,11 +14,14 @@ class FreelancerService
         $sortBy = $filters['sort_by'] ?? 'created_at';
         $sortOrder = $filters['sort_order'] ?? 'desc';
     
-        return User::query()
+        $cacheKey = 'freelancers_list_' . $sortBy . '_' . $sortOrder;
+        return Cache::remember($cacheKey, 600, function() use ($sortBy, $sortOrder){
+            return User::query()
             ->freelancers()
             ->with(['freelancerProfile', 'skills'])
             ->orderBy($sortBy, $sortOrder)
             ->paginate(10);
+        });
     }
 
     /**
@@ -41,10 +45,12 @@ class FreelancerService
     }
 
     /**
-     * Get Top Rated (Simplified)
+     * Get Top Rated
      */
     public function getTopRatedFreelancers(int $limit = 10)
     {
+        $cacheKey = 'top_rated_freelancers_' . $limit;
+         return Cache::remember($cacheKey, 300, function() use ($limit) {
         return User::freelancers()
             ->verified()
             ->with(['freelancerProfile', 'skills'])
@@ -53,13 +59,17 @@ class FreelancerService
             ->orderByDesc('reviews_avg_rating')
             ->limit($limit)
             ->get();
+    });
     }
-
     /**
-     * Get Available Freelancers (Simplified)
+     * Get Available Freelancers
      */
     public function getAvailableFreelancers(int $limit = 20)
     {
+
+     $cacheKey = 'available_freelancers_' . $limit;
+        
+        return Cache::remember($cacheKey, 300, function() use ($limit) {
         return User::freelancers()
             ->verified()
             ->available('available')
@@ -68,13 +78,15 @@ class FreelancerService
             ->orderByDesc('reviews_avg_rating')
             ->limit($limit)
             ->get();
-    }
+    });}
 
     /**
      * Search by Skills
      */
     public function searchBySkills(array $skillIds, bool $matchAll = false)
     {
+        $cacheKey = 'skills_search_' . implode('_', $skillIds) . '_' . ($matchAll ? 'all' : 'any');
+         return Cache::remember($cacheKey, 300, function() use ($skillIds, $matchAll) {
         $query = User::freelancers()
             ->verified()
             ->with(['freelancerProfile', 'skills']);
@@ -90,14 +102,10 @@ class FreelancerService
         return $query->withAvg('reviews', 'rating')
             ->orderByDesc('reviews_avg_rating')
             ->paginate(20);
-    }
+    });}
 
-    /**
-     * Minimal Stats Calculation
-     */
     private function getStats(User $freelancer): array
     {
-        // Using withCount/withAvg is more efficient than separate queries
         $freelancer->loadCount([
             'bids as completed_projects' => fn($q) => $q->whereHas('project', fn($p) => $p->where('status', 'closed')),
             'reviews'

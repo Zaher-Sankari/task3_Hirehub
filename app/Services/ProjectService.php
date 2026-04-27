@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Cache;
 class ProjectService
 {
     /**
@@ -13,7 +13,10 @@ class ProjectService
      */
     public function listProjects(array $filters)
     {
-        $query = Project::query()
+    
+        $cacheKey = 'project_list_' . md5(json_encode($filters));
+        return Cache::remember($cacheKey,180,function () use ($filters){
+             $query = Project::query()
             ->with(['client', 'tags', 'bids'])
             ->where('status', 'open'); 
 
@@ -41,9 +44,10 @@ class ProjectService
             $tagIds = is_array($filters['tag_ids']) ? $filters['tag_ids'] : explode(',', $filters['tag_ids']);
             $query->whereHas('tags', function ($q) use ($tagIds) {
                 $q->whereIn('tags.id', $tagIds);
-            });
-        }                
+            });  
+        }
         return $query->paginate(15);
+        });
     }
 
     /**
@@ -64,7 +68,7 @@ class ProjectService
             if (!empty($data['tags'])) {
                 $project->tags()->sync($data['tags']);
             }
-
+            Cache::flush();
             return $project->load(['client', 'tags']);
         });
     }
@@ -104,7 +108,7 @@ class ProjectService
             if (isset($data['tags'])) {
                 $project->tags()->sync($data['tags']);
             }
-
+            Cache::flush();
             return $project->load(['client', 'tags']);
         });
     }
@@ -125,6 +129,8 @@ class ProjectService
             $project->tags()->detach();
             $project->bids()->delete();
             $project->attachments()->delete();
+
+            Cache::flush();
             return $project->delete();
         });
     }
@@ -139,6 +145,8 @@ class ProjectService
         }
         
         $project->update(['status' => 'closed']);
+
+        Cache::flush();
         return $project;
     }
 }
